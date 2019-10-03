@@ -1,0 +1,51 @@
+grammar src.idm_mml.MyDsl with org.eclipse.xtext.common.Terminals
+
+generate mML "http://www.xtext.org/example/MML"
+
+MML:
+	'MML' '{'
+	mml += Implementation+ 
+	mml += Dataset+ 
+	'}';
+	
+Implementation:
+	{Implementation} 'Implementation' 'Scikit-learn' | 'Weka' '{' 
+		algo += Algorithme
+		metrique += Metrique
+		strategie += Strategie
+		'}';
+
+Dataset:
+	'Dataset' path=STRING '{'
+	cible += Cible
+	predictives += Predictives
+	'}'; 
+	
+Strategie:
+	'Strategie' strategie += Validation | CrossValidation
+;
+
+Validation:
+	'Validation' pourcentage=INT
+;
+
+CrossValidation:
+	{CrossValidation} 'CrossValidation' k=INT?
+;
+	
+Cible:
+	'Cible' idColonne; /* Colonne cible */
+	
+Predictives:
+	'Predictives' predictives += idColonne+; /* Colonnes prédictives */
+	
+idColonne:
+	'Colonne' id=INT; /* id d'une colonne */
+
+Algorithme:
+	'Algorithme' text=STRING; /* Algo à utiliser */
+	
+Metrique:
+	'Metrique' text=STRING; /* Metrique en sortie */
+
+	

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="mML" nsURI="http://www.xtext.org/example/MML" nsPrefix="mML">
+  <eClassifiers xsi:type="ecore:EClass" name="MML">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mml" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Implementation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="algo" upperBound="-1" eType="#//Algorithme"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="metrique" upperBound="-1"
+        eType="#//Metrique" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="strategie" upperBound="-1"
+        eType="#//Strategie" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Dataset">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cible" upperBound="-1"
+        eType="#//Cible" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="predictives" upperBound="-1"
+        eType="#//Predictives" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Strategie">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="strategie" upperBound="-1"
+        eType="#//Validation" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Validation">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pourcentage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CrossValidation" eSuperTypes="#//Strategie">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="k" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Cible"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Predictives">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="predictives" upperBound="-1"
+        eType="#//idColonne" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="idColonne" eSuperTypes="#//Cible">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Algorithme">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Metrique">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>
