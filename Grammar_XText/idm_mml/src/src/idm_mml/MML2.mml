@@ -1,0 +1,9 @@
+MML {
+	Implementation Scikit-learn {
+		Algorithm ExtraTree
+		Metric Accuracy 
+		Strategy CrossValidation 15
+		}
+		Dataset "date2.csv" {
+		}
+}

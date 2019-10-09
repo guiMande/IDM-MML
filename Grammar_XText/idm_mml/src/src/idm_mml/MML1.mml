@@ -1,0 +1,11 @@
+MML {
+	Implementation Scikit-learn {
+		Algorithm DecisionTree
+		Metric Accuracy
+		Strategy Validation 35%
+		}
+		Dataset "date.csv" {
+			Target Column "col5"
+			Predictive Column "col1" Column "col2" Column "col3" Column "col4"
+		}
+}

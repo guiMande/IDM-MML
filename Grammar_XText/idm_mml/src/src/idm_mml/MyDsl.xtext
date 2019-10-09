@@ -1,51 +1,77 @@
-grammar src.idm_mml.MyDsl with org.eclipse.xtext.common.Terminals
+grammar org.xtext.example.MML with org.eclipse.xtext.common.Terminals
 
 generate mML "http://www.xtext.org/example/MML"
 
+/* Balise generale MML permettant d'indiquer les parametres de l'implementation et du dataset */
 MML:
 	'MML' '{'
-	mml += Implementation+ 
-	mml += Dataset+ 
-	'}';
-	
-Implementation:
-	{Implementation} 'Implementation' 'Scikit-learn' | 'Weka' '{' 
-		algo += Algorithme
-		metrique += Metrique
-		strategie += Strategie
-		'}';
+		mml 	+= Implementation
+		mml 	+= Dataset
+	'}'
+;
 
+/* Balise Implementation permettant d'indiquer le choix de l'implementation, l'algorithme utilise,
+ * la ou les metriques utilisees et la strategie choisie */
+Implementation:
+	{Implementation} 'Implementation' ('Scikit-learn' | 'Weka') '{'
+		algo 		+= Algorithm
+		metric 		+= Metric
+		strategy 	+= Strategy
+	'}'
+;
+
+/* Balise Dataset permettant d'indiquer les noms des colonnes cibles et prédictives
+ * Par défaut, si non renseignés, utilise la dernière colonne comme cible et les autres comme prédictives */
 Dataset:
 	'Dataset' path=STRING '{'
-	cible += Cible
-	predictives += Predictives
-	'}'; 
-	
-Strategie:
-	'Strategie' strategie += Validation | CrossValidation
+		target 		+= Target?
+		predictive 	+= Predictive?
+	'}'
 ;
 
+/* Permet d'indiquer l'algorithme a utiliser parmi une liste */
+Algorithm:
+	'Algorithm' algorithm += ('DecisionTree' | 'ExtraTree' | 'LinearSVC')
+;
+
+/* Permet d'indiquer la ou les metriques a sortir parmi une liste */
+Metric:
+	'Metric' metrics += ('Accuracy' | 'Recall' | 'f1')+
+;
+
+/* Balise Strategy permettant de choisir une strategie Validation ou CrossValidation */
+Strategy:
+	'Strategy' strategy += (Validation | CrossValidation)
+;
+
+/* Pour la strategie Validation, on renseigne un pourcentage qui represente l'ensemble "test" */
 Validation:
-	'Validation' pourcentage=INT
+	{Validation} 'Validation' PERCENTAGE
 ;
 
+/* Pourcentage sur 1 ou 2 chiffres */
+terminal PERCENTAGE:
+	('0'..'9')('0'..'9')?'%'
+;
+
+/* Pour la strategie CrossValidation, on renseigne un int k qui represente en combien de parties le dataset sera decoupe
+ * k n'est pas obligatoire, par defaut il est egal a n - 1 (avec n elements dans le dataset) */
 CrossValidation:
 	{CrossValidation} 'CrossValidation' k=INT?
 ;
-	
-Cible:
-	'Cible' idColonne; /* Colonne cible */
-	
-Predictives:
-	'Predictives' predictives += idColonne+; /* Colonnes pr�dictives */
-	
-idColonne:
-	'Colonne' id=INT; /* id d'une colonne */
 
-Algorithme:
-	'Algorithme' text=STRING; /* Algo � utiliser */
-	
-Metrique:
-	'Metrique' text=STRING; /* Metrique en sortie */
+/* Represente la cible a predire et utilise un idColumn pour indiquer le nom de la colonne */
+Target:
+	'Target' idColumn
+;
 
+/* Represente les colonnes predictives et utilise un idColumn pour indiquer le nom de chaque colonne */
+Predictive:
+	'Predictive' predictive += idColumn+
+;
+
+/* Permet d'indiquer un nom de colonne */
+idColumn:
+	'Column' name=STRING
+;
 	
